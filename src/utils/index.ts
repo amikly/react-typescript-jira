@@ -29,7 +29,7 @@ export const useMount = (callback: () => void) => {
 };
 
 // 把 value 延时转换成 debouncedValue (响应式)
-export const useDebounce = (value: unknown, delay?: number): any => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
