@@ -16,7 +16,7 @@ export const ProjectListScreen = () => {
     personId: "",
   });
 
-  const debouncedParam = useDebounce(param, 2000);
+  const debouncedParam = useDebounce(param, 200);
 
   // 表格中值的状态
   const [list, setList] = useState([]);
