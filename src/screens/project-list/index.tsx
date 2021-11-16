@@ -1,10 +1,8 @@
-import qs from "qs";
 import React, { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useMount } from "utils";
+import { useHttp } from "utils/http";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   // 下拉框中值的状态
@@ -20,25 +18,16 @@ export const ProjectListScreen = () => {
 
   // 表格中值的状态
   const [list, setList] = useState([]);
+  const client = useHttp();
 
   // 当param改变时请求数据
   useEffect(() => {
-    fetch(
-      `${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`
-    ).then(async (response) => {
-      if (response.ok) {
-        setList(await response.json());
-      }
-    });
+    client("projects", { data: cleanObject(debouncedParam) }).then(setList);
   }, [debouncedParam]);
 
   // 初始化users 页面初次渲染（render）时执行
   useMount(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
+    client("users").then(setUsers);
   });
 
   return (
