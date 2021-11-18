@@ -52,6 +52,14 @@ export const http = async (
 
 export const useHttp = () => {
   const { user } = useAuth();
+
+  /* 
+    Utility Types：充当工具的类型
+      用法: 用泛型给它传入一个其它类型，然后它对这个类型进行某种操作
+  */
+  // JS中的typeof，是在runtime时运行的
+  // TS中的typeof，是在静态环境运行的，把变量类型提取出来
+  // Parameters 以tuple的形式提取出<函数类型>的参数类型
   return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user ? user.token : "" });
 };

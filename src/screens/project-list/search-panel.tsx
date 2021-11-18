@@ -1,3 +1,4 @@
+import { Input, Select } from "antd";
 import React from "react";
 
 export interface User {
@@ -23,7 +24,7 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
     <form>
       <div>
         {/* setParam(Object.assign({},param,{name:evt.targrt.value})) */}
-        <input
+        <Input
           type="text"
           value={param.name}
           /* 输入框中值改变时，更新状态中param对象的值 */
@@ -34,17 +35,17 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
             })
           }
         />
-        <select
+        <Select
           value={param.personId}
-          onChange={(evt) => setParam({ ...param, personId: evt.target.value })}
+          onChange={(value) => setParam({ ...param, personId: value })}
         >
-          <option value="">负责人</option>
+          <Select.Option value="">负责人</Select.Option>
           {users.map((user) => (
-            <option value={user.id} key={user.id}>
+            <Select.Option value={user.id} key={user.id}>
               {user.name}
-            </option>
+            </Select.Option>
           ))}
-        </select>
+        </Select>
       </div>
     </form>
   );

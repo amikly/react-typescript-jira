@@ -2,8 +2,8 @@ import { AuthenticatedApp } from "authenticated-app";
 import { useAuth } from "context/auth-context";
 import React from "react";
 import { UnauthenticatedApp } from "unauthenticated-app";
+import "./App.less";
 // import { ProjectListScreen } from "screens/project-list";
-import "./App.css";
 
 function App() {
   const { user } = useAuth();
