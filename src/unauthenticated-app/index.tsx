@@ -40,6 +40,7 @@ const Background = styled.div`
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
+  /* 引入svg图片 */
   background-attachment: fixed;
   background-position: left bottom, right bottom;
   background-size: calc(((100vw - 40rem) / 2) - 3.2rem),
