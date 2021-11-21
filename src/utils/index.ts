@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 
 // 除0外布尔值为false的情况
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "";
 
 // 在一个函数里，改变传入的对象本身是不好的
 // 删除对象中值为空的键值对
-export const cleanObject = (object: Object) => {
+export const cleanObject = (object: { [key: string]: unknown }) => {
   // Object.assign({},object)
   const result = { ...object };
   Object.keys(result).forEach((key) => {
-    //@ts-ignore
     const value = result[key];
-    if (isFalsy(value)) {
-      //@ts-ignore
+    if (isVoid(value)) {
       delete result[key];
     }
   });

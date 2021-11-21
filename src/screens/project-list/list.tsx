@@ -1,9 +1,9 @@
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { User } from "./search-panel";
 
-interface Project {
+export interface Project {
   id: string;
   name: string;
   personId: string;
@@ -12,11 +12,19 @@ interface Project {
   created: number;
 }
 
-interface ListProps {
+/**
+ * ListProps 的属性由两部分组成
+ *  1.TableProps：Table上所有属性的集合类型
+ *  2.users
+ */
+interface ListProps extends TableProps<Project> {
   users: User[];
-  list: Project[];
 }
-export const List = ({ users, list }: ListProps) => {
+/**
+ * props: Table上所有属性的集合
+ * 等同于 type props = Omit<ListProps,"users">
+ */
+export const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
       pagination={false}
@@ -36,7 +44,6 @@ export const List = ({ users, list }: ListProps) => {
           render(value, project) {
             return (
               <span>
-                {" "}
                 {users.find((user) => user.id === project.personId)?.name ||
                   "未知"}
               </span>
@@ -56,7 +63,7 @@ export const List = ({ users, list }: ListProps) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     />
   );
 };
