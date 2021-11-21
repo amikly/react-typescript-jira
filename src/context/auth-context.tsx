@@ -1,8 +1,10 @@
 import * as auth from "auth-provider";
-import React, { ReactNode, useState } from "react";
+import { FullPageErrorFallback, FullPageLoading } from "component/lib";
+import React, { ReactNode } from "react";
 import { User } from "screens/project-list/search-panel";
 import { useMount } from "utils";
 import { http } from "utils/http";
+import { useAsync } from "utils/use-async";
 
 // 刷新页面初始化user
 const bootstrapUser = async () => {
@@ -36,7 +38,16 @@ AuthContext.displayName = "AuthContext";
 
 // 进行登录注册界面的主要的逻辑处理
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const {
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    isEror,
+    run,
+    setData: setUser,
+  } = useAsync<User | null>();
+
   // point free  (user) => setUser(user)
   const login = (form: AuthForm) => auth.login(form).then(setUser);
 
@@ -46,8 +57,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // 页面加载
   useMount(() => {
-    bootstrapUser().then(setUser);
+    run(bootstrapUser());
   });
+
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
+
+  if (isEror) {
+    return <FullPageErrorFallback error={error} />;
+  }
 
   return (
     <AuthContext.Provider
