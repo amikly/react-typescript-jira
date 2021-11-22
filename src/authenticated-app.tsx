@@ -7,6 +7,7 @@ import { ProjectListScreen } from "screens/project-list";
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
+  const value: any = undefined;
   return (
     <Container>
       <Header between={true}>
