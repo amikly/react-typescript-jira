@@ -4,12 +4,15 @@ import left from "assets/left.svg";
 import logo from "assets/logo.svg";
 import right from "assets/right.svg";
 import React, { useState } from "react";
+import { useDocumentTitle } from "utils";
 import { LoginScreen } from "./login";
 import { RegisterScreen } from "./register";
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setisRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  useDocumentTitle("请登录注册以继续");
 
   return (
     <Container>
